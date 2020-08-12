@@ -22,7 +22,7 @@ const useStyles = createUseStyles({
 const Button: React.FC<Props> = ({ name }) => {
   const classes= useStyles();
 
-  return <button className={classes.button}>
+  return <button className={classes.button} >
     {name}
   </button>
 }
