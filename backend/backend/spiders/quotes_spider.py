@@ -32,6 +32,8 @@
 from bs4 import BeautifulSoup
 import scrapy
 counter = 74
+
+
 class QuotesSpider(scrapy.Spider):
     name = "quotes"
 
@@ -51,9 +53,9 @@ class QuotesSpider(scrapy.Spider):
         for cool in text:
             yield scrapy.Request(url=cool, callback=self.parse_links)
 
-    def parse_links(self,response):
+    def parse_links(self, response):
         global counter
         smallurls = response.css("div.content").extract()
-        with open(f"avatar{counter}","w") as f:
+        with open(f"avatar{counter}", "w") as f:
             f.write(smallurls[0])
         counter += 1
