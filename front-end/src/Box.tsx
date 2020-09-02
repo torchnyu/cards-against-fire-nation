@@ -21,12 +21,17 @@ const useStyles = createUseStyles({
     fontWeight:"700",
     margin: "5px",
     fontSize:"3vh",
+    border:"1px solid black",
   },
   questionDiv:{
     backgroundColor:"white",
+    webkitPrintColorAdjust: "exact",
+
   },
   answerDiv:{
     backgroundColor:"#af210d",
+    webkitPrintColorAdjust: "exact",
+
     color:"white",
   },
 

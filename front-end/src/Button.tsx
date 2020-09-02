@@ -3,6 +3,7 @@ import { createUseStyles } from "react-jss";
 
 interface Props {
   name: string
+  onClick: any
 }
 
 const useStyles = createUseStyles({
@@ -19,10 +20,10 @@ const useStyles = createUseStyles({
   },
 });
 
-const Button: React.FC<Props> = ({ name }) => {
+const Button: React.FC<Props> = ({ name, onClick }) => {
   const classes= useStyles();
 
-  return <button className={classes.button} >
+  return <button className={classes.button} onClick={onClick}>
     {name}
   </button>
 }

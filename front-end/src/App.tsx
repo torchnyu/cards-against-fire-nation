@@ -1,16 +1,21 @@
-import React from 'react';
+import React, {useState,useEffect} from 'react';
 import logo from './logo.svg';
 // import './App.css';
 import { createUseStyles } from "react-jss";
 import avatar from "./avatar.png";
 import Button  from "./Button";
 import Box from "./Box";
+import fs from "fs";
+
+interface Props {
+  size: number
+}
 
 const useStyles = createUseStyles({
   App:{
     backgroundImage: `url(${avatar})`,
     height: "90vh",
-    overflow:"hidden",
+    overflow:"scroll",
     backgroundRepeat:"no-repeat",
     backgroundSize:"cover",
     fontFamily:"Courier New",
@@ -47,8 +52,13 @@ const useStyles = createUseStyles({
     color:"black",
   },
   divAnswers:{
+    WebkitPrintColorAdjust: "exact",
     display:"flex",
+    width:"100vw",
+    flexWrap:"wrap",
+    justifyContent:"center",
   }
+
 });
 function generateCards(){
   console.log("hi");
@@ -58,25 +68,87 @@ function generateCards(){
 
 function App() {
   const classes= useStyles();
+  const [allNouns, setAllNouns] = useState([]);
+  const [allSentences, setAllSentences] = useState([]);
+
+  const [gameNouns, setGameNouns] = useState([""]);
+  const [gameSentences, setGameSentences] = useState([""]);
+
+
+  // const data = useState({});
+  const result = async () =>{
+    const data = await fetch("/final_form.json");
+    const courses = await data.json();
+    setAllNouns(courses["nouns"]);
+    setAllSentences(courses["sentences"]);
+    return;
+  }
+
+  useEffect(() => {
+    result();
+  }, []);
+
+
+  function generateCards(){
+      var index = 0;
+
+      const listOfNouns = [""];
+      const listOfSentences = [""];
+
+      let i = 0;
+      for (i= 0; i <6 ; i++){
+        index = getRandomNumber(allSentences.length);
+        var sentence = ""+allSentences[index];
+        while (sentence.length > 130){
+          index = getRandomNumber(allSentences.length);
+          sentence = ""+allSentences[index];
+        }
+        sentence = sentence.replace("dogge", "_______");
+        listOfSentences.push(sentence);
+      }
+      listOfSentences.shift();
+      setGameSentences(listOfSentences);
+
+      for (i = 0; i < 24; i++){
+        index = getRandomNumber(allNouns.length);
+        const newNoun= allNouns[index];
+        listOfNouns.push(newNoun);
+      }
+      listOfNouns.shift();
+      setGameNouns(listOfNouns);
+  }
+
+  function getRandomNumber(size: number){
+    return Math.floor(Math.random() * size);
+  }
+
   return (
     <div>
       <header className={classes.header}> Cards Against the Fire Nation
       </header>
       <div className={classes.App}>
       <br/>
-      <Button name="Generate Cards" >  </Button>
+      <Button name="Generate Cards" onClick={generateCards}>  </Button>
+      <Button name="Print" onClick={window.print}>  </Button>
+
       <br/>
       <div className={classes.divAnswers}>
-      <Box name = "The monks always told me _____." type="question"> </Box>
+
+      {gameSentences.map((sentence) => {
+                   return (
+                     <Box name={sentence} type="question" >
+                     </Box>
+                   );
+                 })}
       </div>
       <br/>
       <div className={classes.divAnswers}>
-      <Box name = "I would never rise from the shame and humiliation of my defeat" type="answer"> </Box>
-      <Box name = "you must look in yourself to save yourself from your other self" type="answer"> </Box>
-      <Box name = "that's rough buddy" type="answer"> </Box>
-      <Box name = "the pai sho tile was in my sleeve the whole time" type="answer"> </Box>
-
-
+      {gameNouns.map((noun) => {
+                   return (
+                     <Box name={noun} type="answer" >
+                     </Box>
+                   );
+                 })}
       </div>
     </div>
     <footer className={classes.footer}> A <a className={classes.a} href="https://spark.torchnyu.com/" target="blank"> Spark</a>y Sparky Boom Boom Project </footer>
