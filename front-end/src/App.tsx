@@ -1,15 +1,10 @@
 import React, {useState,useEffect} from 'react';
 import logo from './logo.svg';
-// import './App.css';
 import { createUseStyles } from "react-jss";
 import avatar from "./avatar.png";
 import Button  from "./Button";
 import Box from "./Box";
 import fs from "fs";
-
-interface Props {
-  size: number
-}
 
 const useStyles = createUseStyles({
   App:{
