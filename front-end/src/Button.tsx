@@ -10,8 +10,8 @@ const useStyles = createUseStyles({
   button:{
     fontSize:"2rem",
     fontFamily:"Courier New",
-
-    backgroundColor:"#969595",
+    padding:"3px",
+    backgroundColor:"#E0E0E0",
     color: "black",
     borderRadius: "7px",
     "&:hover":{
