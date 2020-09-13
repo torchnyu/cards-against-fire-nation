@@ -8,19 +8,21 @@ interface Props {
 
 const useStyles = createUseStyles({
   div:{
+    pageBreakInside: "avoid",
     backgroundImage: `url(${background})`,
     backgroundSize:"3vh",
     backgroundRepeat:"no-repeat",
     backgroundPosition:"left bottom",
     color: "#af210d",
     borderRadius: "10px",
-    height: "35vh",
-    width: "25vh",
-    padding: "1vh",
+    height: "48.4vh",
+    width: "28vh",
     fontFamily:"Helvetica",
     fontWeight:"700",
     margin: "5px",
     fontSize:"3vh",
+    border:"1px solid black",
+    webkitPrintColorAdjust: "exact",
   },
   questionDiv:{
     backgroundColor:"white",
@@ -29,18 +31,21 @@ const useStyles = createUseStyles({
     backgroundColor:"#af210d",
     color:"white",
   },
-
+  p:{
+    paddingLeft:"10px",
+    paddingRight:"10px",
+  },
 });
 
 const Box: React.FC<Props> = ({ name, type }) => {
   const classes= useStyles();
-  if (type == "question"){
+  if (type === "question"){
   return <div className={ classes.questionDiv + " " + classes.div} >
-    {name}
+    <p className={ classes.p }> {name} </p>
   </div>
   }
   return <div className={classes.answerDiv +  " " + classes.div} >
-    {name}
+    <p className={ classes.p }> {name} </p>
   </div>
 
 

@@ -3,14 +3,15 @@ import { createUseStyles } from "react-jss";
 
 interface Props {
   name: string
+  onClick: any
 }
 
 const useStyles = createUseStyles({
   button:{
     fontSize:"2rem",
     fontFamily:"Courier New",
-
-    backgroundColor:"#969595",
+    padding:"3px",
+    backgroundColor:"#E0E0E0",
     color: "black",
     borderRadius: "7px",
     "&:hover":{
@@ -19,10 +20,10 @@ const useStyles = createUseStyles({
   },
 });
 
-const Button: React.FC<Props> = ({ name }) => {
+const Button: React.FC<Props> = ({ name, onClick }) => {
   const classes= useStyles();
 
-  return <button className={classes.button} >
+  return <button className={classes.button} onClick={onClick}>
     {name}
   </button>
 }
